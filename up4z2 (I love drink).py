@@ -12,6 +12,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS ingredient
             drink INTEGER,
             strength REAL)
             """)
+#  quantity для напитков рассчитывается в мл
 
 # коктейль
 cursor.execute("""CREATE TABLE IF NOT EXISTS cocktail
@@ -48,14 +49,14 @@ def cock_add(name, price):
         drink, strength = cursor.fetchone()
 
         if drink == 1:
-            total_strength += strength * cost
+            total_strength += strength / 100 * cost
             total_V += cost
         cursor.execute('''
                     INSERT INTO ingred_cock (ingred_name, cock_name, cost)
                     VALUES (?, ?, ?)
                 ''', (ingred_name, name, cost))
         con.commit()
-    total_strength = total_strength / total_V
+    total_strength = total_strength / total_V * 100
     # создание коктейля
     cursor.execute('''
                 INSERT INTO cocktail (name, price, strength)
