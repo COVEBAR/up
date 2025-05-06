@@ -57,7 +57,7 @@ def check_all():
 def check_one(id):
     con = sqlite3.connect("students.db")
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM students WHERE id=?", (id))
+    cursor.execute("SELECT * FROM students WHERE id=?", (id, ))
     stud = cursor.fetchone()
     print(stud, sum(stud[5:9]) / 4)
 
@@ -83,10 +83,10 @@ def average_group(group):
     cursor = con.cursor()
     cursor.execute("SELECT * FROM students WHERE group_name=?", (group, ))
     for i in cursor.fetchall():
-        print(i[1:4], sum(i[5:9]) / 4)
+        return i[1:4], sum(i[5:9]) / 4
 
 while True:
-    comm = input("1 add\n2 check all\n3 check one\n4 edit\n5 del\n6 average group\nother stop\n")
+    comm = input("1 add\n2 check all\n3 check one\n4 edit\n5 del\n6 average group\n- stop\n")
     if comm == "1":
         stud = make_stud()
         add_stud(stud)
