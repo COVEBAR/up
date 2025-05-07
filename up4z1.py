@@ -37,8 +37,6 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS students
 
 # добавление студента
 def add_stud(student):
-    con = sqlite3.connect('students.db')
-    cursor = con.cursor()
     cursor.execute('''
             INSERT INTO students (name, surname, father, group_name, grade1, grade2, grade3, grade4)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -47,24 +45,18 @@ def add_stud(student):
 
 # просмотр всех студентов
 def check_all():
-    con = sqlite3.connect('students.db')
-    cursor = con.cursor()
     cursor.execute('SELECT * FROM students')
     for i in cursor.fetchall():
         print(i)
 
 # просмотр одного студента
 def check_one(id):
-    con = sqlite3.connect("students.db")
-    cursor = con.cursor()
     cursor.execute("SELECT * FROM students WHERE id=?", (id, ))
     stud = cursor.fetchone()
     print(stud, sum(stud[5:9]) / 4)
 
 # редактирование студента
 def edit_stud(id, student):
-    con = sqlite3.connect('students.db')
-    cursor = con.cursor()
     cursor.execute('''
             UPDATE students 
             SET name=?, surname=?, father=?, group_name=?, grade1=?, grade2=?, grade3=?, grade4=? WHERE id=?
@@ -73,14 +65,10 @@ def edit_stud(id, student):
 
 #удаление студента
 def del_stud(id):
-    con = sqlite3.connect("students.db")
-    cursor = con.cursor()
     cursor.execute("DELETE FROM students WHERE id=?", (id, ))
     con.commit()
 
 def average_group(group):
-    con = sqlite3.connect("students.db")
-    cursor = con.cursor()
     cursor.execute("SELECT * FROM students WHERE group_name=?", (group, ))
     for i in cursor.fetchall():
         return i[1:4], sum(i[5:9]) / 4

@@ -35,9 +35,6 @@ def cock_add(name, price):
     total_V = 0
     # общий объём и крепость коктейля
 
-    con = sqlite3.connect('I_love_drink.db')
-    cursor = con.cursor()
-
     #создание состава
     ingred_name = "0"
     while ingred_name != "":
@@ -92,8 +89,6 @@ def check_cock():
             print(j)
 
 def sale(cock, quantity):
-    con = sqlite3.connect('I_love_drink.db')
-    cursor = con.cursor()
     cursor2 = con.cursor()
     cursor.execute('SELECT ingred_name, cost FROM ingred_cock WHERE cock_name=?', (cock, ))
     for i in cursor.fetchall():
@@ -102,8 +97,6 @@ def sale(cock, quantity):
 
 # приход
 def upd(ingred, quantity):
-    con = sqlite3.connect('I_love_drink.db')
-    cursor = con.cursor()
     cursor.execute('SELECT quantity FROM ingredient WHERE name=?', (ingred,))
     quantity += cursor.fetchone()[0]
     cursor.execute('UPDATE ingredient SET quantity=? WHERE name=?', (quantity, ingred))
